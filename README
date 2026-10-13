@@ -1,0 +1,151 @@
+# Gestalt Lens
+
+**An AI-powered visual analysis tool for exploring Gestalt principles in design.**
+
+Gestalt Lens analyzes uploaded images and identifies the Gestalt principle that most strongly influences their visual composition. It provides a short explanation, a confidence score, and up to two alternative principles.
+
+Built as a design-focused tool for exploring how people perceive visual relationships, patterns, and organization.
+
+## Features
+
+- **Image analysis:** Upload an image for AI-powered visual analysis.
+- **Nine Gestalt principles:** Identifies the principle most strongly demonstrated by the composition.
+- **Simple explanations:** Provides a short, student-friendly explanation of the result.
+- **Confidence score:** Returns a confidence estimate from 0–100.
+- **Alternative principles:** Lists up to two other principles that may apply.
+- **Local AI processing:** Uses LM Studio to run a compatible vision model locally.
+- **Desktop interface:** Can be launched in a native desktop window using PyWebView.
+
+## Gestalt Principles
+
+Gestalt Lens evaluates images against the following principles:
+
+1. **Proximity** — Elements close together are perceived as related.
+2. **Similarity** — Similar-looking elements are perceived as belonging together.
+3. **Continuity** — The eye tends to follow smooth lines and continuous paths.
+4. **Closure** — The mind fills in missing parts to perceive complete forms.
+5. **Figure-Ground** — The visual system distinguishes a subject from its background.
+6. **Common Fate** — Elements moving or appearing to move in the same direction are perceived as related.
+7. **Common Region** — Elements within the same bounded area are perceived as a group.
+8. **Connectedness** — Visually connected elements are perceived as related.
+9. **Symmetry/Order** — Symmetrical and orderly arrangements are perceived as unified.
+
+## Technology Stack
+
+- **Python** — Application backend
+- **Flask** — Local web server and API
+- **LM Studio** — Local model serving
+- **Bonsai 27B** — Vision-capable model used for image analysis
+- **OpenAI-compatible API** — Connects the application to LM Studio
+- **HTML, CSS, and JavaScript** — User interface
+- **PyWebView** — Optional native desktop window
+
+## Requirements
+
+Before running Gestalt Lens, install or prepare:
+
+- Python 3
+- LM Studio
+- A compatible vision-capable model, configured in LM Studio
+- Git, if cloning the repository
+
+The current configuration expects the model identifier `llmprism-ml/bonsai-27b` and LM Studio's local API endpoint at `http://localhost:1234/v1`.
+
+## Installation
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/jaedenko/Gestalt-Lens.git
+cd Gestalt-Lens
+```
+
+### 2. Install dependencies
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+### 3. Set up LM Studio
+
+1. Open LM Studio.
+2. Download or load the compatible vision model.
+3. Start the local server.
+4. Confirm that the server is listening at `http://localhost:1234`.
+
+**Note:** The model must support image inputs. A text-only model will not be sufficient.
+
+### 4. Launch the application
+
+On Windows, run:
+
+```bat
+run_gestalt.bat
+```
+
+Alternatively, start the backend directly:
+
+```bash
+python server.py
+```
+
+Then open [http://localhost:3000](http://localhost:3000) in your browser.
+
+To use the native desktop interface, install the required PyWebView dependency and run:
+
+```bash
+python desktop.py
+```
+
+## How It Works
+
+1. The user uploads an image through the interface.
+2. Flask receives the image and encodes it for the model request.
+3. The application sends the image and a structured prompt to LM Studio.
+4. The model selects a primary Gestalt principle and generates an explanation.
+5. The backend validates the response and returns the results as JSON.
+6. The interface displays the analysis.
+
+The application expects the model to return a primary principle, a short explanation, a confidence score, and up to two alternative principles.
+
+## Project Structure
+
+```text
+Gestalt-Lens/
+├── index.html          # User interface
+├── server.py           # Flask backend and image analysis
+├── desktop.py          # Optional native desktop launcher
+├── requirements.txt    # Python dependencies
+├── run.bat             # Launcher
+├── run_gestalt.bat     # Application launcher
+├── run_gestalt.vbs     # Launcher without a visible console
+├── .gitignore          # Excluded files and local configuration
+└── .gitattributes      # Git file handling configuration
+```
+
+## Privacy and Limitations
+
+- The application is configured to connect to a **local LM Studio server**.
+- Images are sent to the model running through that local server rather than an external OpenAI API in the current configuration.
+- The application requires LM Studio and a compatible model to be running.
+- Model outputs, including confidence scores, are estimates and should not be treated as objective measurements.
+- Multiple Gestalt principles can apply to the same image; the selected primary principle is the model's interpretation.
+
+## Future Improvements
+
+Potential areas for development include:
+
+- More detailed visual explanations
+- Highlighting the regions of an image associated with a principle
+- Adjustable analysis detail
+- Support for additional local vision models
+- Improved model-output validation
+- Standalone packaging for easier installation
+
+## License
+
+No license has been specified yet. Unless a license is added to the repository, users should not assume that the project is available for unrestricted reuse or redistribution.
+
+---
+
+**Gestalt Lens** — Exploring the principles behind how we see and organize visual information.
